@@ -11,7 +11,12 @@
 #  updated_at :datetime         not null
 #
 class Actor < ApplicationRecord
-  def characters
+
+  has_many(:characters, { :class_name => "Character", :foreign_key => "actor_id"})
+
+  has_many(:filmography, { :through => :characters, :source => :movie })
+  
+    def characters
     key = self.id
 
     the_many = Character.where({ :actor_id => key })
